@@ -1,3 +1,4 @@
+'use strict'
 const walk = require('../')
 const Walker = walk.Walker
 const WalkerSync = walk.WalkerSync

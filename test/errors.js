@@ -1,3 +1,4 @@
+'use strict'
 const t = require('tap')
 const walk = require('../')
 const Walker = walk.Walker
@@ -10,6 +11,7 @@ require('./common.js').ignores({
 
 t.test('error only emits once', t => {
   const poop = new Error('poop')
+  poop.stack
   t.teardown(mutateFS.statFail(poop))
 
   t.test('async', t => {
@@ -35,6 +37,7 @@ t.test('error only emits once', t => {
 
 t.test('readdir error', t => {
   const poop = new Error('poop')
+  poop.stack
   t.teardown(mutateFS.fail('readdir', poop))
 
   t.test('async', t => {
