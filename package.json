@@ -1,0 +1,27 @@
+{
+  "name": "ignore-walk",
+  "version": "0.0.0",
+  "description": "Nested/recursive `.gitignore`/`.npmignore` parsing and filtering.",
+  "main": "index.js",
+  "devDependencies": {
+    "mutate-fs": "^1.1.0",
+    "tap": "^10.3.2"
+  },
+  "scripts": {
+    "test": "tap test/*.js --100"
+  },
+  "keywords": [
+    "ignorefile",
+    "ignore",
+    "file",
+    ".gitignore",
+    ".npmignore",
+    "glob"
+  ],
+  "author": "Isaac Z. Schlueter <i@izs.me> (http://blog.izs.me/)",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/isaacs/ignore-walk.git"
+  }
+}
