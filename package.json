@@ -4,7 +4,9 @@
   "description": "Nested/recursive `.gitignore`/`.npmignore` parsing and filtering.",
   "main": "index.js",
   "devDependencies": {
+    "mkdirp": "^0.5.1",
     "mutate-fs": "^1.1.0",
+    "rimraf": "^2.6.1",
     "tap": "^10.3.2"
   },
   "scripts": {
@@ -29,5 +31,8 @@
   },
   "files": [
     "index.js"
-  ]
+  ],
+  "dependencies": {
+    "minimatch": "^3.0.4"
+  }
 }
