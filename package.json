@@ -1,6 +1,6 @@
 {
   "name": "ignore-walk",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Nested/recursive `.gitignore`/`.npmignore` parsing and filtering.",
   "main": "index.js",
   "devDependencies": {
@@ -27,5 +27,7 @@
     "type": "git",
     "url": "git+https://github.com/isaacs/ignore-walk.git"
   },
-  "files": [ "index.js" ]
+  "files": [
+    "index.js"
+  ]
 }
