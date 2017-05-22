@@ -26,5 +26,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/isaacs/ignore-walk.git"
-  }
+  },
+  "files": [ "index.js" ]
 }
