@@ -1,17 +1,4 @@
 'use strict'
-// entries = readdir(path)
-//
-// if ignore file name in entries
-//   add rules from ignore files
-//
-// filter entries, include if included as nondir, or as dir/partial
-//
-// for each entry remaining
-//   stat entry
-//   if !directory
-//     this.result.push(entry)
-//   else
-//     new Walker(path + / + entry, parent: this)
 
 const fs = require('fs')
 const path = require('path')
