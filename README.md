@@ -1,5 +1,8 @@
 # ignore-walk
 
+[![Build
+Status](https://travis-ci.org/isaacs/ignore-walk.svg?branch=master)](https://travis-ci.org/isaacs/ignore-walk)
+
 Nested/recursive `.gitignore`/`.npmignore` parsing and filtering.
 
 Walk a directory creating a list of entries, parsing any `.ignore`
