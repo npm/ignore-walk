@@ -1,5 +1,7 @@
 const t = require('tap')
-const Walker = require('../')
+const walk = require('../')
+const Walker = walk.Walker
+const WalkerSync = walk.WalkerSync
 const mutateFS = require('mutate-fs')
 
 require('./common.js').ignores({
@@ -24,7 +26,7 @@ t.test('error only emits once', t => {
   })
 
   t.test('sync', t => {
-    t.throws(_ => new Walker.Sync({ path: __dirname }), poop)
+    t.throws(_ => new WalkerSync({ path: __dirname }), poop)
     t.end()
   })
 
@@ -43,7 +45,7 @@ t.test('readdir error', t => {
   })
 
   t.test('sync', t => {
-    t.throws(_ => new Walker.Sync(), poop)
+    t.throws(_ => new WalkerSync(), poop)
     t.end()
   })
 
@@ -62,7 +64,7 @@ t.test('readFile error', t => {
   })
 
   t.test('sync', t => {
-    t.throws(_ => new Walker.Sync(), poop)
+    t.throws(_ => new WalkerSync(), poop)
     t.end()
   })
 

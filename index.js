@@ -280,5 +280,18 @@ class WalkerSync extends Walker {
   }
 }
 
-Walker.Sync = WalkerSync
-module.exports = Walker
+const walk = (options, callback) => {
+  const p = new Promise((resolve, reject) => {
+    new Walker(options).on('done', resolve).on('error', reject)
+  })
+  return callback ? p.then(res => callback(null, res), callback) : p
+}
+
+const walkSync = options => {
+  return new WalkerSync(options).result
+}
+
+module.exports = walk
+walk.sync = walkSync
+walk.Walker = Walker
+walk.WalkerSync = WalkerSync

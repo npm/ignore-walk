@@ -1,6 +1,8 @@
 const mkdirp = require('mkdirp')
 const t = require('tap')
-const Walker = require('../')
+const walk = require('../')
+const Walker = walk.Walker
+const WalkerSync = walk.WalkerSync
 const path = require('path')
 const dir = path.resolve(__dirname, 'fixtures/empty')
 const rimraf = require('rimraf')
@@ -20,22 +22,15 @@ t.test('do not include empty dir', t => {
   ]
 
   t.test('sync', t => {
-    t.same(new Walker.Sync({
+    t.same(walk.sync({
       ignoreFiles: [ '.ignore', '.empty-ignore' ]
-    }).result, expected)
+    }), expected)
     t.end()
   })
 
-  t.test('async', t => {
-    new Walker({
-      ignoreFiles: [ '.ignore', '.empty-ignore' ]
-    }).on('done', result => {
-      t.same(result, expected)
-      t.end()
-    })
-  })
-
-  t.end()
+  return t.test('async', t => walk({
+    ignoreFiles: [ '.ignore', '.empty-ignore' ]
+  }).then(result => t.same(result, expected)))
 })
 
 t.test('include empty dir', t => {
@@ -46,7 +41,7 @@ t.test('include empty dir', t => {
   ]
 
   t.test('sync', t => {
-    t.same(new Walker.Sync({
+    t.same(new WalkerSync({
       includeEmpty: true,
       ignoreFiles: [ '.ignore', '.empty-ignore' ]
     }).result, expected)

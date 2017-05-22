@@ -1,4 +1,6 @@
-const Walker = require('../')
+const walk = require('../')
+const Walker = walk.Walker
+const WalkerSync = walk.WalkerSync
 const fs = require('fs')
 
 // set the ignores just for this test
@@ -63,7 +65,7 @@ t.test('async', t => {
 
 t.test('sync', t => {
   t.plan(1)
-  t.same(new Walker.Sync({
+  t.same(new WalkerSync({
     path: __dirname + '/fixtures',
     ignoreFiles: [ '.gitignore', '.ignore' ]
   }).result, expect)

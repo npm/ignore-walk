@@ -1,5 +1,5 @@
 'use strict'
-const Walker = require('../')
+const walk = require('../')
 
 // set the ignores just for this test
 var c = require('./common.js')
@@ -14,16 +14,13 @@ var expect = [
 const t = require('tap')
 t.test('sync', t => {
   t.plan(1)
-  t.same(new Walker.Sync({
+  t.same(walk.sync({
     path: __dirname + '/fixtures',
     ignoreFiles: [ '.ignore' ]
-  }).result, expect)
+  }), expect)
 })
 
-t.test('async', t => {
-  t.plan(1)
-  new Walker({
-    path: __dirname + '/fixtures',
-    ignoreFiles: [ '.ignore' ]
-  }).on('done', result => t.same(result, expect))
-})
+t.test('async', t => walk({
+  path: __dirname + '/fixtures',
+  ignoreFiles: [ '.ignore' ]
+}, (er, result) => t.same(result, expect)))

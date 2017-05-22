@@ -1,5 +1,5 @@
 'use strict'
-var Walker = require('../')
+const walk = require('../')
 
 // set the ignores just for this test
 const c = require('./common.js')
@@ -10,22 +10,17 @@ const notAllowed = [ /^\/a\/b\/.*/, /^\/a\/.*\/aca$/ ]
 
 const t = require('tap')
 
-t.test('async', t => {
-  new Walker({
-    path: __dirname + '/fixtures',
-    ignoreFiles: [ '.basic-ignore' ]
-  }).on('done', result => {
-    result.forEach(r => notAllowed.forEach(na =>
-      t.dissimilar(r, na, r + ' !~ ' + na)))
-    t.end()
-  })
-})
+t.test('async', t => walk({
+  path: __dirname + '/fixtures',
+  ignoreFiles: [ '.basic-ignore' ]
+}, (er, result) => result.forEach(r => notAllowed.forEach(na =>
+  t.dissimilar(r, na, r + ' !~ ' + na)))))
 
 t.test('sync', t => {
-  const result = new Walker.Sync({
+  walk.sync({
     path: __dirname + '/fixtures',
     ignoreFiles: [ '.basic-ignore' ]
-  }).result.forEach(r => notAllowed.forEach(na =>
+  }).forEach(r => notAllowed.forEach(na =>
     t.dissimilar(r, na, r + ' !~ ' + na)))
   t.end()
 })
