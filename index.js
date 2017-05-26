@@ -5,107 +5,87 @@ const path = require('path')
 const EE = require('events').EventEmitter
 const Minimatch = require('minimatch').Minimatch
 
-const _addIgnoreFiles = Symbol('_addIgnoreFiles')
-const _addIgnoreFile = Symbol('_addIgnoreFile')
-const _entries = Symbol('_entries')
-const _filterEntries = Symbol('_filterEntries')
-const _filterEntry = Symbol('_filterEntry')
-const _ignoreFiles = Symbol('_ignoreFiles')
-const _ignoreRules = Symbol('_ignoreRules')
-const _isIgnoreFile = Symbol('_isIgnoreFile')
-const _onReadIgnoreFile = Symbol('_onReadIgnoreFile')
-const _onReaddir = Symbol('_onReaddir')
-const _parent = Symbol('_parent')
-const _readdir = Symbol('_readdir')
-const _sawError = Symbol('_sawError')
-const _stat = Symbol('_stat')
-const _walker = Symbol('_walker')
-const _walkerOpt = Symbol('_walkerOpt')
-const _root = Symbol('_root')
-const _includeEmpty = Symbol('_includeEmpty')
-const _follow = Symbol('_follow')
-
 class Walker extends EE {
   constructor (opts) {
     opts = opts || {}
     super(opts)
     this.path = opts.path || process.cwd()
     this.basename = path.basename(this.path)
-    this[_ignoreFiles] = opts.ignoreFiles || [ '.ignore' ]
-    this[_ignoreRules] = {}
-    this[_parent] = opts.parent || null
-    this[_includeEmpty] = !!opts.includeEmpty
-    this[_root] = this[_parent] ? this[_parent][_root] : this.path
-    this[_follow] = !!opts.follow
-    this.result = this[_parent] ? this[_parent].result : []
-    this[_entries] = null
-    this[_readdir]()
-    this[_sawError] = false
+    this.ignoreFiles = opts.ignoreFiles || [ '.ignore' ]
+    this.ignoreRules = {}
+    this.parent = opts.parent || null
+    this.includeEmpty = !!opts.includeEmpty
+    this.root = this.parent ? this.parent.root : this.path
+    this.follow = !!opts.follow
+    this.result = this.parent ? this.parent.result : []
+    this.entries = null
+    this.readdir()
+    this.sawError = false
   }
 
   emit (ev, data) {
     let ret = false
-    if (!(this[_sawError] && ev === 'error')) {
+    if (!(this.sawError && ev === 'error')) {
       if (ev === 'error')
-        this[_sawError] = true
-      else if (ev === 'done' && !this[_parent])
+        this.sawError = true
+      else if (ev === 'done' && !this.parent)
         data = data.sort()
-      if (ev === 'error' && this[_parent])
-        ret = this[_parent].emit('error', data)
+      if (ev === 'error' && this.parent)
+        ret = this.parent.emit('error', data)
       else
         ret = super.emit(ev, data)
     }
     return ret
   }
 
-  [_readdir] () {
+  readdir () {
     fs.readdir(this.path, (er, entries) =>
-      er ? this.emit('error', er) : this[_onReaddir](entries))
+      er ? this.emit('error', er) : this.onReaddir(entries))
   }
 
-  [_isIgnoreFile] (e) {
+  isIgnoreFile (e) {
     return e !== "." &&
       e !== ".." &&
-      -1 !== this[_ignoreFiles].indexOf(e)
+      -1 !== this.ignoreFiles.indexOf(e)
   }
 
-  [_onReaddir] (entries) {
-    this[_entries] = entries
+  onReaddir (entries) {
+    this.entries = entries
     if (entries.length === 0) {
-      if (this[_includeEmpty])
-        this.result.push(this.path.substr(this[_root].length + 1))
+      if (this.includeEmpty)
+        this.result.push(this.path.substr(this.root.length + 1))
       this.emit('done', this.result)
     } else {
-      const hasIg = this[_entries].some(e =>
-        this[_isIgnoreFile](e))
+      const hasIg = this.entries.some(e =>
+        this.isIgnoreFile(e))
 
       if (hasIg)
-        this[_addIgnoreFiles]()
+        this.addIgnoreFiles()
       else
-        this[_filterEntries]()
+        this.filterEntries()
     }
   }
 
-  [_addIgnoreFiles] () {
-    const newIg = this[_entries]
-      .filter(e => this[_isIgnoreFile](e))
+  addIgnoreFiles () {
+    const newIg = this.entries
+      .filter(e => this.isIgnoreFile(e))
 
     let igCount = newIg.length
     const then = _ => {
       if (--igCount === 0)
-        this[_filterEntries]()
+        this.filterEntries()
     }
 
-    newIg.forEach(e => this[_addIgnoreFile](e, then))
+    newIg.forEach(e => this.addIgnoreFile(e, then))
   }
 
-  [_addIgnoreFile] (file, then) {
+  addIgnoreFile (file, then) {
     const ig = path.resolve(this.path, file)
     fs.readFile(ig, 'utf8', (er, data) =>
-      er ? this.emit('error', er) : this[_onReadIgnoreFile](file, data, then))
+      er ? this.emit('error', er) : this.onReadIgnoreFile(file, data, then))
   }
 
-  [_onReadIgnoreFile] (file, data, then) {
+  onReadIgnoreFile (file, data, then) {
     const mmopt = {
       matchBase: true,
       dot: true,
@@ -116,12 +96,12 @@ class Walker extends EE {
       .map(r => new Minimatch(r, mmopt))
 
     if (rules.length)
-      this[_ignoreRules][file] = rules
+      this.ignoreRules[file] = rules
 
     then()
   }
 
-  [_filterEntries] () {
+  filterEntries () {
     // at this point we either have ignore rules, or just inheriting
     // this exclusion is at the point where we know the list of
     // entries in the dir, but don't know what they are.  since
@@ -130,10 +110,10 @@ class Walker extends EE {
     // of files that will be included later.  Anything included
     // at this point will be checked again later once we know
     // what it is.
-    const filtered = this[_entries].map(entry => {
+    const filtered = this.entries.map(entry => {
       // at this point, we don't know if it's a dir or not.
-      const passFile = this[_filterEntry](entry)
-      const passDir = this[_filterEntry](entry, true)
+      const passFile = this.filterEntry(entry)
+      const passDir = this.filterEntry(entry, true)
       return (passFile || passDir) ? [entry, passFile, passDir] : false
     }).filter(e => e)
 
@@ -152,60 +132,60 @@ class Walker extends EE {
         const entry = filt[0]
         const file = filt[1]
         const dir = filt[2]
-        this[_stat](entry, file, dir, then)
+        this.stat(entry, file, dir, then)
       })
     }
   }
 
-  [_stat] (entry, file, dir, then) {
+  stat (entry, file, dir, then) {
     const abs = this.path + '/' + entry
     const onstat = (er, st) => {
       if (er)
         this.emit('error', er)
       else if (!st.isDirectory()) {
         if (file)
-          this.result.push(abs.substr(this[_root].length + 1))
+          this.result.push(abs.substr(this.root.length + 1))
         then()
       } else {
         // is a directory
         if (dir)
-          this[_walker](entry, then)
+          this.walker(entry, then)
         else
           then()
       }
     }
 
-    fs[this[_follow] ? 'stat' : 'lstat'](abs, onstat)
+    fs[this.follow ? 'stat' : 'lstat'](abs, onstat)
   }
 
-  [_walkerOpt] (entry) {
+  walkerOpt (entry) {
     return {
       path: this.path + '/' + entry,
       parent: this,
-      ignoreFiles: this[_ignoreFiles],
-      follow: this[_follow],
-      includeEmpty: this[_includeEmpty]
+      ignoreFiles: this.ignoreFiles,
+      follow: this.follow,
+      includeEmpty: this.includeEmpty
     }
   }
 
-  [_walker] (entry, then) {
-    new Walker(this[_walkerOpt](entry)).on('done', then)
+  walker (entry, then) {
+    new Walker(this.walkerOpt(entry)).on('done', then)
   }
 
-  [_filterEntry] (entry, partial) {
+  filterEntry (entry, partial) {
     let included = true
 
     // this = /a/b/c
     // entry = d
     // parent /a/b sees c/d
-    if (this[_parent] && this[_parent][_filterEntry]) {
+    if (this.parent && this.parent.filterEntry) {
       var pt = this.basename + "/" + entry
-      included = this[_parent][_filterEntry](pt, partial)
+      included = this.parent.filterEntry(pt, partial)
     }
 
-    this[_ignoreFiles].forEach(f => {
-      if (this[_ignoreRules][f]) {
-        this[_ignoreRules][f].forEach(rule => {
+    this.ignoreFiles.forEach(f => {
+      if (this.ignoreRules[f]) {
+        this.ignoreRules[f].forEach(rule => {
           // negation means inclusion
           // so if it's negated, and already included, no need to check
           // likewise if it's neither negated nor included
@@ -239,31 +219,31 @@ class WalkerSync extends Walker {
     this.result = this.result.sort()
   }
 
-  [_readdir] () {
-    this[_onReaddir](fs.readdirSync(this.path))
+  readdir () {
+    this.onReaddir(fs.readdirSync(this.path))
   }
 
-  [_addIgnoreFile] (file, then) {
+  addIgnoreFile (file, then) {
     const ig = path.resolve(this.path, file)
-    this[_onReadIgnoreFile](file, fs.readFileSync(ig, 'utf8'), then)
+    this.onReadIgnoreFile(file, fs.readFileSync(ig, 'utf8'), then)
   }
 
-  [_stat] (entry, file, dir, then) {
+  stat (entry, file, dir, then) {
     const abs = this.path + '/' + entry
-    const st = fs[this[_follow] ? 'statSync' : 'lstatSync'](abs)
+    const st = fs[this.follow ? 'statSync' : 'lstatSync'](abs)
     if (!st.isDirectory()) {
       if (file)
-        this.result.push(abs.substr(this[_root].length + 1))
+        this.result.push(abs.substr(this.root.length + 1))
     } else {
       // is a directory
       if (dir)
-        this[_walker](entry)
+        this.walker(entry)
     }
     then()
   }
 
-  [_walker] (entry) {
-    new WalkerSync(this[_walkerOpt](entry))
+  walker (entry) {
+    new WalkerSync(this.walkerOpt(entry))
   }
 }
 
