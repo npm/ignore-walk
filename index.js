@@ -19,7 +19,6 @@ class Walker extends EE {
     this.follow = !!opts.follow
     this.result = this.parent ? this.parent.result : []
     this.entries = null
-    this.readdir()
     this.sawError = false
   }
 
@@ -38,9 +37,10 @@ class Walker extends EE {
     return ret
   }
 
-  readdir () {
+  start () {
     fs.readdir(this.path, (er, entries) =>
       er ? this.emit('error', er) : this.onReaddir(entries))
+    return this
   }
 
   isIgnoreFile (e) {
@@ -169,7 +169,7 @@ class Walker extends EE {
   }
 
   walker (entry, then) {
-    new Walker(this.walkerOpt(entry)).on('done', then)
+    new Walker(this.walkerOpt(entry)).on('done', then).start()
   }
 
   filterEntry (entry, partial) {
@@ -216,11 +216,11 @@ class Walker extends EE {
 class WalkerSync extends Walker {
   constructor (opt) {
     super(opt)
-    this.result = this.result.sort()
   }
 
-  readdir () {
+  start () {
     this.onReaddir(fs.readdirSync(this.path))
+    return this
   }
 
   addIgnoreFile (file, then) {
@@ -243,19 +243,19 @@ class WalkerSync extends Walker {
   }
 
   walker (entry) {
-    new WalkerSync(this.walkerOpt(entry))
+    new WalkerSync(this.walkerOpt(entry)).start()
   }
 }
 
 const walk = (options, callback) => {
   const p = new Promise((resolve, reject) => {
-    new Walker(options).on('done', resolve).on('error', reject)
+    new Walker(options).on('done', resolve).on('error', reject).start()
   })
   return callback ? p.then(res => callback(null, res), callback) : p
 }
 
 const walkSync = options => {
-  return new WalkerSync(options).result
+  return new WalkerSync(options).start().result.sort()
 }
 
 module.exports = walk

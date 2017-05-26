@@ -61,7 +61,7 @@ t.test('async', t => {
   new Walker({
     path: __dirname + '/fixtures',
     ignoreFiles: [ '.gitignore', '.ignore' ]
-  }).on('done', result => t.same(result, expect))
+  }).on('done', result => t.same(result, expect)).start()
 })
 
 t.test('sync', t => {
@@ -69,5 +69,5 @@ t.test('sync', t => {
   t.same(new WalkerSync({
     path: __dirname + '/fixtures',
     ignoreFiles: [ '.gitignore', '.ignore' ]
-  }).result, expect)
+  }).start().result, expect)
 })

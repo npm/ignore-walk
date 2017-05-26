@@ -45,7 +45,7 @@ t.test('include empty dir', t => {
     t.same(new WalkerSync({
       includeEmpty: true,
       ignoreFiles: [ '.ignore', '.empty-ignore' ]
-    }).result, expected)
+    }).start().result, expected)
     t.end()
   })
 
@@ -53,7 +53,7 @@ t.test('include empty dir', t => {
     new Walker({
       includeEmpty: true,
       ignoreFiles: [ '.ignore', '.empty-ignore' ]
-    }).on('done', result => {
+    }).start().on('done', result => {
       t.same(result, expected)
       t.end()
     })

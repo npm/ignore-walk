@@ -16,7 +16,7 @@ t.test('error only emits once', t => {
 
   t.test('async', t => {
     let sawError = false
-    const w = new Walker({ path: __dirname })
+    const w = new Walker({ path: __dirname }).start()
     w.on('error', er => {
       t.equal(er, poop)
       if (sawError)
@@ -28,7 +28,7 @@ t.test('error only emits once', t => {
   })
 
   t.test('sync', t => {
-    t.throws(_ => new WalkerSync({ path: __dirname }), poop)
+    t.throws(_ => new WalkerSync({ path: __dirname }).start(), poop)
     t.end()
   })
 
@@ -44,11 +44,11 @@ t.test('readdir error', t => {
     new Walker({}).on('error', er => {
       t.equal(er, poop)
       t.end()
-    })
+    }).start()
   })
 
   t.test('sync', t => {
-    t.throws(_ => new WalkerSync(), poop)
+    t.throws(_ => new WalkerSync().start(), poop)
     t.end()
   })
 
@@ -63,11 +63,11 @@ t.test('readFile error', t => {
     new Walker().on('error', er => {
       t.equal(er, poop)
       t.end()
-    })
+    }).start()
   })
 
   t.test('sync', t => {
-    t.throws(_ => new WalkerSync(), poop)
+    t.throws(_ => new WalkerSync().start(), poop)
     t.end()
   })
 
