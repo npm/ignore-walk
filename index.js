@@ -89,7 +89,8 @@ class Walker extends EE {
     const mmopt = {
       matchBase: true,
       dot: true,
-      flipNegate: true
+      flipNegate: true,
+      nocase: true
     }
     const rules = data.split(/\r?\n/)
       .filter(line => !/^#|^$/.test(line.trim()))
