@@ -28,7 +28,7 @@ class Walker extends EE {
       if (ev === 'error')
         this.sawError = true
       else if (ev === 'done' && !this.parent)
-        data = data.sort()
+        data = data.sort(this.sort)
       if (ev === 'error' && this.parent)
         ret = this.parent.emit('error', data)
       else
