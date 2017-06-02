@@ -138,25 +138,29 @@ class Walker extends EE {
     }
   }
 
+  onstat (st, entry, file, dir, then) {
+    const abs = this.path + '/' + entry
+    if (!st.isDirectory()) {
+      if (file)
+        this.result.push(abs.substr(this.root.length + 1))
+      then()
+    } else {
+      // is a directory
+      if (dir)
+        this.walker(entry, then)
+      else
+        then()
+    }
+  }
+
   stat (entry, file, dir, then) {
     const abs = this.path + '/' + entry
-    const onstat = (er, st) => {
+    fs[this.follow ? 'stat' : 'lstat'](abs, (er, st) => {
       if (er)
         this.emit('error', er)
-      else if (!st.isDirectory()) {
-        if (file)
-          this.result.push(abs.substr(this.root.length + 1))
-        then()
-      } else {
-        // is a directory
-        if (dir)
-          this.walker(entry, then)
-        else
-          then()
-      }
-    }
-
-    fs[this.follow ? 'stat' : 'lstat'](abs, onstat)
+      else
+        this.onstat(st, entry, file, dir, then)
+    })
   }
 
   walkerOpt (entry) {
@@ -232,15 +236,7 @@ class WalkerSync extends Walker {
   stat (entry, file, dir, then) {
     const abs = this.path + '/' + entry
     const st = fs[this.follow ? 'statSync' : 'lstatSync'](abs)
-    if (!st.isDirectory()) {
-      if (file)
-        this.result.push(abs.substr(this.root.length + 1))
-    } else {
-      // is a directory
-      if (dir)
-        this.walker(entry)
-    }
-    then()
+    this.onstat(st, entry, file, dir, then)
   }
 
   walker (entry) {
