@@ -252,7 +252,7 @@ const walk = (options, callback) => {
 }
 
 const walkSync = options => {
-  return new WalkerSync(options).start().result.sort()
+  return new WalkerSync(options).start().result
 }
 
 module.exports = walk
