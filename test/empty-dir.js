@@ -22,6 +22,18 @@ t.test('do not include empty dir', t => {
     'c/b/a/cba'
   ]
 
+  t.test('empty ignore file is an empty array, not missing', t => {
+    const w = new Walker({
+      ignoreFiles: [ '.ignore', '.empty-ignore' ]
+    })
+    w.on('done', results => {
+      t.same(results, expected)
+      t.same(w.ignoreRules['.empty-ignore'], [])
+      t.end()
+    })
+    w.start()
+  })
+
   t.test('sync', t => {
     t.same(walk.sync({
       ignoreFiles: [ '.ignore', '.empty-ignore' ]
