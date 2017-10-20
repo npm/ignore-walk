@@ -7,7 +7,7 @@
     "mkdirp": "^0.5.1",
     "mutate-fs": "^1.1.0",
     "rimraf": "^2.6.1",
-    "tap": "^10.3.2"
+    "tap": "^10.7.2"
   },
   "scripts": {
     "test": "tap test/*.js --100",
