@@ -5,7 +5,7 @@
   "main": "index.js",
   "devDependencies": {
     "mkdirp": "^0.5.1",
-    "mutate-fs": "^1.1.0",
+    "mutate-fs": "^2.1.0",
     "rimraf": "^2.6.1",
     "tap": "^10.7.2"
   },
