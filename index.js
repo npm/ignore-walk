@@ -191,9 +191,11 @@ class Walker extends EE {
       included = this.parent.filterEntry(pt, partial)
     }
 
+    const self = this;
+
     this.ignoreFiles.forEach(f => {
-      if (this.ignoreRules[f]) {
-        this.ignoreRules[f].forEach(rule => {
+      if (self.ignoreRules[f]) {
+        self.ignoreRules[f].forEach(rule => {
           // negation means inclusion
           // so if it's negated, and already included, no need to check
           // likewise if it's neither negated nor included
