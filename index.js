@@ -7,12 +7,21 @@ const Minimatch = require('minimatch').Minimatch
 
 class Walker extends EE {
   constructor (opts) {
+    const mmopt = {
+      matchBase: true,
+      dot: true,
+      flipNegate: true,
+      nocase: true
+    }
+
     opts = opts || {}
     super(opts)
     this.path = opts.path || process.cwd()
     this.basename = path.basename(this.path)
     this.ignoreFiles = opts.ignoreFiles || [ '.ignore' ]
-    this.ignoreRules = {}
+    this.ignoreRules = {
+      '.git': new Minimatch('**/.git/', mmopt)
+    }
     this.parent = opts.parent || null
     this.includeEmpty = !!opts.includeEmpty
     this.root = this.parent ? this.parent.root : this.path
