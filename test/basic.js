@@ -3,10 +3,18 @@ const walk = require('../')
 
 // set the ignores just for this test
 const c = require('./common.js')
-c.ignores({ 'a/.basic-ignore': ['b/', 'aca'] })
+c.ignores({
+  'a/.basic-ignore': ['b/', 'aca'],
+  // not actually an ignore file, but whatever
+  '@foo': [],
+})
 
 // the files that we expect to not see
-const notAllowed = [ /^\/a\/b\/.*/, /^\/a\/.*\/aca$/ ]
+const notAllowed = [
+  /^\/a\/b\/.*/,
+  /^\/a\/.*\/aca$/,
+  /^@/,
+]
 
 const t = require('tap')
 
