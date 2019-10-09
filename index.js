@@ -17,7 +17,7 @@ class Walker extends EE {
     this.includeEmpty = !!opts.includeEmpty
     this.root = this.parent ? this.parent.root : this.path
     this.follow = !!opts.follow
-    this.result = this.parent ? this.parent.result : []
+    this.result = this.parent ? this.parent.result : new Set()
     this.entries = null
     this.sawError = false
   }
@@ -32,7 +32,8 @@ class Walker extends EE {
       if (ev === 'error')
         this.sawError = true
       else if (ev === 'done' && !this.parent) {
-        data = data.map(e => /^@/.test(e) ? `./${e}` : e).sort(this.sort)
+        data = Array.from(data)
+          .map(e => /^@/.test(e) ? `./${e}` : e).sort(this.sort)
         this.result = data
       }
 
@@ -60,7 +61,7 @@ class Walker extends EE {
     this.entries = entries
     if (entries.length === 0) {
       if (this.includeEmpty)
-        this.result.push(this.path.substr(this.root.length + 1))
+        this.result.add(this.path.substr(this.root.length + 1))
       this.emit('done', this.result)
     } else {
       const hasIg = this.entries.some(e =>
@@ -148,7 +149,7 @@ class Walker extends EE {
     const abs = this.path + '/' + entry
     if (!st.isDirectory()) {
       if (file)
-        this.result.push(abs.substr(this.root.length + 1))
+        this.result.add(abs.substr(this.root.length + 1))
       then()
     } else {
       // is a directory
