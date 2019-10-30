@@ -11,7 +11,6 @@
 var mkdirp = require('mkdirp')
 var path = require('path')
 var i = 0
-var t = require('tap')
 var fs = require('fs')
 var rimraf = require('rimraf')
 var fixtures = path.resolve(__dirname, 'fixtures')
@@ -48,5 +47,3 @@ dirs.forEach(function (dir) {
     fs.writeFileSync(file, path.basename(file))
   })
 })
-
-t.pass('this is fine')

@@ -7,7 +7,7 @@
     "mkdirp": "^0.5.1",
     "mutate-fs": "^1.1.0",
     "rimraf": "^2.6.1",
-    "tap": "^14.6.9"
+    "tap": "^14.9.1"
   },
   "scripts": {
     "test": "tap",
@@ -36,6 +36,8 @@
     "minimatch": "^3.0.4"
   },
   "tap": {
+    "before": "test/00-setup.js",
+    "after": "test/zz-cleanup.js",
     "jobs": 1
   }
 }
