@@ -4,7 +4,7 @@ const walk = require('../')
 
 // set the ignores just for this test
 require('./common.js').ignores({
-  '.ignore': ['*', '!/link/b/c/.abc', '!link/c/b/cba']
+  '.ignore': ['*', '!/link/c/h/.dch', '!link/h/c/hcd']
 })
 
 const path = require('path')
@@ -13,14 +13,14 @@ const fs = require('fs')
 
 const link = path.resolve(__dirname, 'fixtures/link')
 try { fs.unlinkSync(link) } catch (_) {}
-fs.symlinkSync('a', link)
+fs.symlinkSync('d', link)
 
 t.teardown(_ => fs.unlinkSync(link))
 
 t.test('follow symlink', t => {
   const expected = [
-    'link/b/c/.abc',
-    'link/c/b/cba'
+    'link/c/h/.dch',
+    'link/h/c/hcd'
   ]
 
   t.test('sync', t => {

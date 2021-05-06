@@ -6,12 +6,12 @@ const fs = require('fs')
 
 // set the ignores just for this test
 var c = require('./common.js')
-c.ignores({ '.gitignore': ['a/b/c/abc'] })
-c.ignores({ '.ignore': ['*', '!a/b/c/abc'] })
+c.ignores({ '.gitignore': ['d/c/h/dch'] })
+c.ignores({ '.ignore': ['*', '!d/c/h/dch'] })
 
 // the only file we expect to see
 const expect = [
-  'a/b/c/abc'
+  'd/c/h/dch'
 ]
 
 const originalReadFile = fs.readFile

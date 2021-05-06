@@ -36,6 +36,7 @@
     "minimatch": "^3.0.4"
   },
   "tap": {
+    "test-env": "LC_ALL=sk",
     "before": "test/00-setup.js",
     "after": "test/zz-cleanup.js",
     "jobs": 1

@@ -5,21 +5,21 @@ var walk = require('../')
 // set the ignores just for this test
 var c = require('./common.js')
 c.ignores({
-  '.ignore': ['*', 'a', 'c', '!a/b/c/.abc', '!/c/b/a/cba'],
-  'a/.ignore': [ '!*', '.ignore' ], // unignore everything
-  'a/a/.ignore': [ '*' ], // re-ignore everything
-  'a/b/.ignore': [ '*', '!/c/.abc' ], // original unignore
-  'a/c/.ignore': [ '*' ], // ignore everything again
-  'c/b/a/.ignore': [ '!cba', '!.cba', '!/a{bc,cb}' ]
+  '.ignore': ['*', 'd', 'h', '!d/c/h/.dch', '!/h/c/d/hcd'],
+  'd/.ignore': [ '!*', '.ignore' ], // unignore everything
+  'd/d/.ignore': [ '*' ], // re-ignore everything
+  'd/c/.ignore': [ '*', '!/h/.dch' ], // original unignore
+  'd/h/.ignore': [ '*' ], // ignore everything again
+  'h/c/d/.ignore': [ '!hcd', '!.hcd', '!/d{ch,dd}' ]
 })
 
 // the only files we expect to see
 var expected = [
-  'a/b/c/.abc',
-  'c/b/a/.cba',
-  'c/b/a/abc',
-  'c/b/a/acb',
-  'c/b/a/cba'
+  'd/c/h/.dch',
+  'h/c/d/.hcd',
+  'h/c/d/dch',
+  'h/c/d/ddd',
+  'h/c/d/hcd'
 ]
 
 const t = require('tap')

@@ -12,14 +12,14 @@ t.teardown(_ => rimraf.sync(dir))
 process.chdir(path.resolve(__dirname, 'fixtures'))
 
 require('./common.js').ignores({
-  '.ignore': ['*', '!a/b/c/.abc', '!/c/b/a/cba', '!empty'],
+  '.ignore': ['*', '!d/c/h/.dch', '!/h/c/d/hcd', '!empty'],
   '.empty-ignore': []
 })
 
 t.test('do not include empty dir', t => {
   const expected = [
-    'a/b/c/.abc',
-    'c/b/a/cba'
+    'd/c/h/.dch',
+    'h/c/d/hcd'
   ]
 
   t.test('empty ignore file is an empty array, not missing', t => {
@@ -48,9 +48,9 @@ t.test('do not include empty dir', t => {
 
 t.test('include empty dir', t => {
   const expected = [
-    'a/b/c/.abc',
-    'c/b/a/cba',
-    'empty'
+    'd/c/h/.dch',
+    'empty',
+    'h/c/d/hcd',
   ]
 
   t.test('sync', t => {

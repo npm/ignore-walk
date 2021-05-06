@@ -4,18 +4,20 @@ const walk = require('../')
 
 // set the ignores just for this test
 require('./common.js').ignores({
-  '.ignore': ['*', '!a/b/c/.abc', '!/c/b/a/cba']
+  '.ignore': ['*', '!d/c/h/.dch', '!/h/c/d/hcd', '!d/c/h/.ddd' ]
 })
 
 // the only files we expect to see
+// Note that the sort is *reversed*
 const expected = [
-  'c/b/a/cba',
-  'a/b/c/.abc'
+  'h/c/d/hcd',
+  'd/c/h/.ddd',
+  'd/c/h/.dch',
 ]
 
 const rev = Class => class extends Class {
   sort (a, b) {
-    return b.localeCompare(a)
+    return b.localeCompare(a, 'en')
   }
 }
 

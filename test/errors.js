@@ -6,7 +6,7 @@ const WalkerSync = walk.WalkerSync
 const mutateFS = require('mutate-fs')
 
 require('./common.js').ignores({
-  '.ignore': ['*', '!a/b/c/.abc', '!/c/b/a/cba']
+  '.ignore': ['*', '!d/c/h/.dch', '!/h/c/d/hcd']
 })
 
 t.test('error only emits once', t => {
