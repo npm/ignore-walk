@@ -4,7 +4,7 @@ const walk = require('../')
 
 // set the ignores just for this test
 require('./common.js').ignores({
-  '.ignore': ['*', '!d/c/h/.dch', '!/h/c/d/hcd', '!d/c/h/.ddd' ]
+  '.ignore': ['*', '!d/c/h/.dch', '!/h/c/d/hcd', '!d/c/h/.ddd'],
 })
 
 // the only files we expect to see
@@ -29,7 +29,7 @@ const t = require('tap')
 t.test('sync', t => {
   t.same(new RevWalkerSync({
     path: __dirname + '/fixtures',
-    ignoreFiles: [ '.ignore' ]
+    ignoreFiles: ['.ignore'],
   }).start().result, expected)
   t.end()
 })
@@ -38,7 +38,7 @@ t.test('async', t => {
   t.plan(1)
   const w = new RevWalker({
     path: __dirname + '/fixtures',
-    ignoreFiles: [ '.ignore' ]
+    ignoreFiles: ['.ignore'],
   })
   w.on('done', result => t.same(result, expected)).start()
 })

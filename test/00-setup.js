@@ -16,7 +16,6 @@
 
 var mkdirp = require('mkdirp')
 var path = require('path')
-var i = 0
 var fs = require('fs')
 var rimraf = require('rimraf')
 var fixtures = path.resolve(__dirname, 'fixtures')
@@ -24,19 +23,18 @@ var fixtures = path.resolve(__dirname, 'fixtures')
 var chars = ['d', 'c', 'h']
 var dirs = []
 
-for (var i = 0; i < 3; i ++) {
-  for (var j = 0; j < 3; j ++) {
-    for (var k = 0; k < 3; k ++) {
+for (let i = 0; i < 3; i++) {
+  for (let j = 0; j < 3; j++) {
+    for (let k = 0; k < 3; k++)
       dirs.push(chars[i] + '/' + chars[j] + '/' + chars[k])
-    }
   }
 }
 
 var files = []
 
-for (var i = 0; i < 3; i ++) {
-  for (var j = 0; j < 3; j ++) {
-    for (var k = 0; k < 3; k ++) {
+for (let i = 0; i < 3; i++) {
+  for (let j = 0; j < 3; j++) {
+    for (let k = 0; k < 3; k++) {
       files.push(chars[i] + chars[j] + chars[k])
       files.push('.' + chars[i] + chars[j] + chars[k])
     }

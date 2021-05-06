@@ -4,6 +4,11 @@
   "description": "Nested/recursive `.gitignore`/`.npmignore` parsing and filtering.",
   "main": "index.js",
   "devDependencies": {
+    "eslint": "^7.25.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-standard": "^5.0.0",
     "mkdirp": "^0.5.1",
     "mutate-fs": "^1.1.0",
     "rimraf": "^2.6.1",
@@ -11,6 +16,10 @@
   },
   "scripts": {
     "test": "tap",
+    "posttest": "npm run lint",
+    "lint": "npm run eslint -- index.js \"test/**/*.js\"",
+    "eslint": "eslint",
+    "lintfix": "npm run lint -- --fix",
     "preversion": "npm test",
     "postversion": "npm publish",
     "postpublish": "git push origin --all; git push origin --tags"

@@ -11,7 +11,7 @@ c.ignores({ '.ignore': ['*', '!d/c/h/dch'] })
 
 // the only file we expect to see
 const expect = [
-  'd/c/h/dch'
+  'd/c/h/dch',
 ]
 
 const originalReadFile = fs.readFile
@@ -34,14 +34,15 @@ fs.readFile = (filename, options, callback) => {
         return firstCall = cb => {
           originalReadFile(filename, options, (err, data) => {
             callback(err, data)
-            if (cb) cb()
+            if (cb)
+              cb()
           })
         }
       }
 
-      if (filename.indexOf('.gitignore') !== -1) {
+      if (filename.indexOf('.gitignore') !== -1)
         firstCall(_ => originalReadFile(filename, options, callback))
-      } else {
+      else {
         originalReadFile(filename, options, (err, data) => {
           callback(err, data)
           firstCall()
@@ -60,7 +61,7 @@ t.test('async', t => {
   t.plan(1)
   new Walker({
     path: __dirname + '/fixtures',
-    ignoreFiles: [ '.gitignore', '.ignore' ]
+    ignoreFiles: ['.gitignore', '.ignore'],
   }).on('done', result => t.same(result, expect)).start()
 })
 
@@ -68,6 +69,6 @@ t.test('sync', t => {
   t.plan(1)
   t.same(new WalkerSync({
     path: __dirname + '/fixtures',
-    ignoreFiles: [ '.gitignore', '.ignore' ]
+    ignoreFiles: ['.gitignore', '.ignore'],
   }).start().result, expect)
 })

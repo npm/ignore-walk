@@ -11,7 +11,7 @@ class Walker extends EE {
     super(opts)
     this.path = opts.path || process.cwd()
     this.basename = path.basename(this.path)
-    this.ignoreFiles = opts.ignoreFiles || [ '.ignore' ]
+    this.ignoreFiles = opts.ignoreFiles || ['.ignore']
     this.ignoreRules = {}
     this.parent = opts.parent || null
     this.includeEmpty = !!opts.includeEmpty
@@ -52,9 +52,9 @@ class Walker extends EE {
   }
 
   isIgnoreFile (e) {
-    return e !== "." &&
-      e !== ".." &&
-      -1 !== this.ignoreFiles.indexOf(e)
+    return e !== '.' &&
+      e !== '..' &&
+      this.ignoreFiles.indexOf(e) !== -1
   }
 
   onReaddir (entries) {
@@ -98,7 +98,7 @@ class Walker extends EE {
       matchBase: true,
       dot: true,
       flipNegate: true,
-      nocase: true
+      nocase: true,
     }
     const rules = data.split(/\r?\n/)
       .filter(line => !/^#|^$/.test(line.trim()))
@@ -129,11 +129,11 @@ class Walker extends EE {
     // if it's a dir, and passes as a dir, then recurse
     // if it's not a dir, but passes as a file, add to set
     let entryCount = filtered.length
-    if (entryCount === 0) {
+    if (entryCount === 0)
       this.emit('done', this.result)
-    } else {
+    else {
       const then = _ => {
-        if (-- entryCount === 0)
+        if (--entryCount === 0)
           this.emit('done', this.result)
       }
       filtered.forEach(filt => {
@@ -176,7 +176,7 @@ class Walker extends EE {
       parent: this,
       ignoreFiles: this.ignoreFiles,
       follow: this.follow,
-      includeEmpty: this.includeEmpty
+      includeEmpty: this.includeEmpty,
     }
   }
 
@@ -191,7 +191,7 @@ class Walker extends EE {
     // entry = d
     // parent /a/b sees c/d
     if (this.parent && this.parent.filterEntry) {
-      var pt = this.basename + "/" + entry
+      var pt = this.basename + '/' + entry
       included = this.parent.filterEntry(pt, partial)
     }
 
@@ -226,10 +226,6 @@ class Walker extends EE {
 }
 
 class WalkerSync extends Walker {
-  constructor (opt) {
-    super(opt)
-  }
-
   start () {
     this.onReaddir(fs.readdirSync(this.path))
     return this

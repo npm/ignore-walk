@@ -6,12 +6,12 @@ const WalkerSync = walk.WalkerSync
 const mutateFS = require('mutate-fs')
 
 require('./common.js').ignores({
-  '.ignore': ['*', '!d/c/h/.dch', '!/h/c/d/hcd']
+  '.ignore': ['*', '!d/c/h/.dch', '!/h/c/d/hcd'],
 })
 
 t.test('error only emits once', t => {
   const poop = new Error('poop')
-  poop.stack
+  poop.stack += ''
   t.teardown(mutateFS.statFail(poop))
 
   t.test('async', t => {
@@ -37,7 +37,7 @@ t.test('error only emits once', t => {
 
 t.test('readdir error', t => {
   const poop = new Error('poop')
-  poop.stack
+  poop.stack += ''
   t.teardown(mutateFS.fail('readdir', poop))
 
   t.test('async', t => {

@@ -13,18 +13,18 @@ process.chdir(path.resolve(__dirname, 'fixtures'))
 
 require('./common.js').ignores({
   '.ignore': ['*', '!d/c/h/.dch', '!/h/c/d/hcd', '!empty'],
-  '.empty-ignore': []
+  '.empty-ignore': [],
 })
 
 t.test('do not include empty dir', t => {
   const expected = [
     'd/c/h/.dch',
-    'h/c/d/hcd'
+    'h/c/d/hcd',
   ]
 
   t.test('empty ignore file is an empty array, not missing', t => {
     const w = new Walker({
-      ignoreFiles: [ '.ignore', '.empty-ignore' ]
+      ignoreFiles: ['.ignore', '.empty-ignore'],
     })
     w.on('done', results => {
       t.same(results, expected)
@@ -36,13 +36,13 @@ t.test('do not include empty dir', t => {
 
   t.test('sync', t => {
     t.same(walk.sync({
-      ignoreFiles: [ '.ignore', '.empty-ignore' ]
+      ignoreFiles: ['.ignore', '.empty-ignore'],
     }), expected)
     t.end()
   })
 
   return t.test('async', t => walk({
-    ignoreFiles: [ '.ignore', '.empty-ignore' ]
+    ignoreFiles: ['.ignore', '.empty-ignore'],
   }).then(result => t.same(result, expected)))
 })
 
@@ -56,7 +56,7 @@ t.test('include empty dir', t => {
   t.test('sync', t => {
     t.same(new WalkerSync({
       includeEmpty: true,
-      ignoreFiles: [ '.ignore', '.empty-ignore' ]
+      ignoreFiles: ['.ignore', '.empty-ignore'],
     }).start().result, expected)
     t.end()
   })
@@ -64,7 +64,7 @@ t.test('include empty dir', t => {
   t.test('async', t => {
     new Walker({
       includeEmpty: true,
-      ignoreFiles: [ '.ignore', '.empty-ignore' ]
+      ignoreFiles: ['.ignore', '.empty-ignore'],
     }).start().on('done', result => {
       t.same(result, expected)
       t.end()

@@ -20,14 +20,14 @@ const t = require('tap')
 
 t.test('async', t => walk({
   path: __dirname + '/fixtures',
-  ignoreFiles: [ '.basic-ignore' ]
+  ignoreFiles: ['.basic-ignore'],
 }, (er, result) => result.forEach(r => notAllowed.forEach(na =>
   t.notMatch(r, na, r + ' !~ ' + na)))))
 
 t.test('sync', t => {
   walk.sync({
     path: __dirname + '/fixtures',
-    ignoreFiles: [ '.basic-ignore' ]
+    ignoreFiles: ['.basic-ignore'],
   }).forEach(r => notAllowed.forEach(na =>
     t.notMatch(r, na, r + ' !~ ' + na)))
   t.end()
