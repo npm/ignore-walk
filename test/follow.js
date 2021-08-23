@@ -61,3 +61,17 @@ t.test('do not include link', t => {
 
   t.end()
 })
+
+const isWindows = process.platform === 'win32'
+t.test('fail following symlink to nowhere', {
+  skip: isWindows && 'no symlink support for missing dirs on windows',
+}, async t => {
+  const path = t.testdir({
+    a: {
+      b: {},
+    },
+    alink: t.fixture('symlink', './a/b/c'),
+  })
+  t.throws(() => walk.sync({ path, follow: true }), { code: 'ENOENT' })
+  t.rejects(() => walk({ path, follow: true }), { code: 'ENOENT' })
+})

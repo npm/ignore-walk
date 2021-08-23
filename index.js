@@ -9,6 +9,8 @@ class Walker extends EE {
   constructor (opts) {
     opts = opts || {}
     super(opts)
+    // set to true if this.path is a symlink, whether follow is true or not
+    this.isSymbolicLink = opts.isSymbolicLink
     this.path = opts.path || process.cwd()
     this.basename = path.basename(this.path)
     this.ignoreFiles = opts.ignoreFiles || ['.ignore']
@@ -145,7 +147,7 @@ class Walker extends EE {
     }
   }
 
-  onstat (st, entry, file, dir, then) {
+  onstat (st, entry, file, dir, isSymbolicLink, then) {
     const abs = this.path + '/' + entry
     if (!st.isDirectory()) {
       if (file)
@@ -154,7 +156,7 @@ class Walker extends EE {
     } else {
       // is a directory
       if (dir)
-        this.walker(entry, then)
+        this.walker(entry, isSymbolicLink, then)
       else
         then()
     }
@@ -162,26 +164,37 @@ class Walker extends EE {
 
   stat (entry, file, dir, then) {
     const abs = this.path + '/' + entry
-    fs[this.follow ? 'stat' : 'lstat'](abs, (er, st) => {
+    fs.lstat(abs, (er, st) => {
       if (er)
         this.emit('error', er)
-      else
-        this.onstat(st, entry, file, dir, then)
+      else {
+        const isSymbolicLink = st.isSymbolicLink()
+        if (this.follow && isSymbolicLink) {
+          fs.stat(abs, (er, st) => {
+            if (er)
+              this.emit('error', er)
+            else
+              this.onstat(st, entry, file, dir, isSymbolicLink, then)
+          })
+        } else
+          this.onstat(st, entry, file, dir, isSymbolicLink, then)
+      }
     })
   }
 
-  walkerOpt (entry) {
+  walkerOpt (entry, isSymbolicLink) {
     return {
       path: this.path + '/' + entry,
       parent: this,
       ignoreFiles: this.ignoreFiles,
       follow: this.follow,
       includeEmpty: this.includeEmpty,
+      isSymbolicLink,
     }
   }
 
-  walker (entry, then) {
-    new Walker(this.walkerOpt(entry)).on('done', then).start()
+  walker (entry, isSymbolicLink, then) {
+    new Walker(this.walkerOpt(entry, isSymbolicLink)).on('done', then).start()
   }
 
   filterEntry (entry, partial) {
@@ -238,12 +251,17 @@ class WalkerSync extends Walker {
 
   stat (entry, file, dir, then) {
     const abs = this.path + '/' + entry
-    const st = fs[this.follow ? 'statSync' : 'lstatSync'](abs)
-    this.onstat(st, entry, file, dir, then)
+    let st = fs.lstatSync(abs)
+    const isSymbolicLink = st.isSymbolicLink()
+    if (this.follow && isSymbolicLink)
+      st = fs.statSync(abs)
+
+    // console.error('STAT SYNC', {st, entry, file, dir, isSymbolicLink, then})
+    this.onstat(st, entry, file, dir, isSymbolicLink, then)
   }
 
-  walker (entry, then) {
-    new WalkerSync(this.walkerOpt(entry)).start()
+  walker (entry, isSymbolicLink, then) {
+    new WalkerSync(this.walkerOpt(entry, isSymbolicLink)).start()
     then()
   }
 }
