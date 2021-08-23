@@ -1,6 +1,6 @@
 {
   "name": "ignore-walk",
-  "version": "3.0.4",
+  "version": "4.0.0",
   "description": "Nested/recursive `.gitignore`/`.npmignore` parsing and filtering.",
   "main": "index.js",
   "devDependencies": {
