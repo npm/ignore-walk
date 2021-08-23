@@ -1,7 +1,8 @@
 'use strict'
 
-if (require.main === module)
+if (require.main === module) {
   return require('tap').pass('this is fine')
+}
 
 const fs = require('fs')
 const path = require('path')
@@ -13,8 +14,9 @@ exports.clearIgnores = clearIgnores
 
 function writeIgnoreFile (file, rules) {
   file = path.resolve(__dirname, 'fixtures', file)
-  if (Array.isArray(rules))
+  if (Array.isArray(rules)) {
     rules = rules.join('\n')
+  }
 
   fs.writeFileSync(file, rules)
 }

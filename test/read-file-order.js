@@ -3,6 +3,8 @@ const walk = require('../')
 const Walker = walk.Walker
 const WalkerSync = walk.WalkerSync
 const fs = require('fs')
+const { resolve } = require('path')
+const path = resolve(__dirname, 'fixtures')
 
 // set the ignores just for this test
 var c = require('./common.js')
@@ -34,15 +36,16 @@ fs.readFile = (filename, options, callback) => {
         return firstCall = cb => {
           originalReadFile(filename, options, (err, data) => {
             callback(err, data)
-            if (cb)
+            if (cb) {
               cb()
+            }
           })
         }
       }
 
-      if (filename.indexOf('.gitignore') !== -1)
+      if (filename.indexOf('.gitignore') !== -1) {
         firstCall(_ => originalReadFile(filename, options, callback))
-      else {
+      } else {
         originalReadFile(filename, options, (err, data) => {
           callback(err, data)
           firstCall()
@@ -60,7 +63,7 @@ const t = require('tap')
 t.test('async', t => {
   t.plan(1)
   new Walker({
-    path: __dirname + '/fixtures',
+    path,
     ignoreFiles: ['.gitignore', '.ignore'],
   }).on('done', result => t.same(result, expect)).start()
 })
@@ -68,7 +71,7 @@ t.test('async', t => {
 t.test('sync', t => {
   t.plan(1)
   t.same(new WalkerSync({
-    path: __dirname + '/fixtures',
+    path,
     ignoreFiles: ['.gitignore', '.ignore'],
   }).start().result, expect)
 })

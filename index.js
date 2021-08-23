@@ -31,18 +31,19 @@ class Walker extends EE {
   emit (ev, data) {
     let ret = false
     if (!(this.sawError && ev === 'error')) {
-      if (ev === 'error')
+      if (ev === 'error') {
         this.sawError = true
-      else if (ev === 'done' && !this.parent) {
+      } else if (ev === 'done' && !this.parent) {
         data = Array.from(data)
           .map(e => /^@/.test(e) ? `./${e}` : e).sort(this.sort)
         this.result = data
       }
 
-      if (ev === 'error' && this.parent)
+      if (ev === 'error' && this.parent) {
         ret = this.parent.emit('error', data)
-      else
+      } else {
         ret = super.emit(ev, data)
+      }
     }
     return ret
   }
@@ -62,17 +63,19 @@ class Walker extends EE {
   onReaddir (entries) {
     this.entries = entries
     if (entries.length === 0) {
-      if (this.includeEmpty)
+      if (this.includeEmpty) {
         this.result.add(this.path.substr(this.root.length + 1))
+      }
       this.emit('done', this.result)
     } else {
       const hasIg = this.entries.some(e =>
         this.isIgnoreFile(e))
 
-      if (hasIg)
+      if (hasIg) {
         this.addIgnoreFiles()
-      else
+      } else {
         this.filterEntries()
+      }
     }
   }
 
@@ -82,8 +85,9 @@ class Walker extends EE {
 
     let igCount = newIg.length
     const then = _ => {
-      if (--igCount === 0)
+      if (--igCount === 0) {
         this.filterEntries()
+      }
     }
 
     newIg.forEach(e => this.addIgnoreFile(e, then))
@@ -131,12 +135,13 @@ class Walker extends EE {
     // if it's a dir, and passes as a dir, then recurse
     // if it's not a dir, but passes as a file, add to set
     let entryCount = filtered.length
-    if (entryCount === 0)
+    if (entryCount === 0) {
       this.emit('done', this.result)
-    else {
+    } else {
       const then = _ => {
-        if (--entryCount === 0)
+        if (--entryCount === 0) {
           this.emit('done', this.result)
+        }
       }
       filtered.forEach(filt => {
         const entry = filt[0]
@@ -150,34 +155,38 @@ class Walker extends EE {
   onstat ({ st, entry, file, dir, isSymbolicLink }, then) {
     const abs = this.path + '/' + entry
     if (!st.isDirectory()) {
-      if (file)
+      if (file) {
         this.result.add(abs.substr(this.root.length + 1))
+      }
       then()
     } else {
       // is a directory
-      if (dir)
+      if (dir) {
         this.walker(entry, { isSymbolicLink }, then)
-      else
+      } else {
         then()
+      }
     }
   }
 
   stat ({ entry, file, dir }, then) {
     const abs = this.path + '/' + entry
     fs.lstat(abs, (er, st) => {
-      if (er)
+      if (er) {
         this.emit('error', er)
-      else {
+      } else {
         const isSymbolicLink = st.isSymbolicLink()
         if (this.follow && isSymbolicLink) {
           fs.stat(abs, (er, st) => {
-            if (er)
+            if (er) {
               this.emit('error', er)
-            else
+            } else {
               this.onstat({ st, entry, file, dir, isSymbolicLink }, then)
+            }
           })
-        } else
+        } else {
           this.onstat({ st, entry, file, dir, isSymbolicLink }, then)
+        }
       }
     })
   }
@@ -227,8 +236,9 @@ class Walker extends EE {
                 rule.match('/' + entry, true) ||
                 rule.match(entry, true)))
 
-            if (match)
+            if (match) {
               included = rule.negate
+            }
           }
         })
       }
@@ -253,8 +263,9 @@ class WalkerSync extends Walker {
     const abs = this.path + '/' + entry
     let st = fs.lstatSync(abs)
     const isSymbolicLink = st.isSymbolicLink()
-    if (this.follow && isSymbolicLink)
+    if (this.follow && isSymbolicLink) {
       st = fs.statSync(abs)
+    }
 
     // console.error('STAT SYNC', {st, entry, file, dir, isSymbolicLink, then})
     this.onstat({ st, entry, file, dir, isSymbolicLink }, then)

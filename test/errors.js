@@ -19,8 +19,9 @@ t.test('error only emits once', t => {
     const w = new Walker({ path: __dirname }).start()
     w.on('error', er => {
       t.equal(er, poop)
-      if (sawError)
+      if (sawError) {
         throw er
+      }
       sawError = true
       w.emit('error', new Error('not poop'))
       t.end()
