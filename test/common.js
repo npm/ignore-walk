@@ -6,7 +6,6 @@ if (require.main === module) {
 
 const fs = require('fs')
 const path = require('path')
-const mkdirp = require('mkdirp')
 
 exports.ignores = ignores
 exports.writeIgnoreFile = writeIgnoreFile
@@ -45,7 +44,7 @@ function createFile (dir, file) {
   var fixtures = path.resolve(__dirname, 'fixtures')
 
   dir = path.resolve(fixtures, dir)
-  mkdirp.sync(dir)
+  fs.mkdirSync(dir, { recursive: true })
   file = path.resolve(dir, file)
   fs.writeFileSync(file, path.basename(file))
 }
