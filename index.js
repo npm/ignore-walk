@@ -228,9 +228,9 @@ class Walker extends EE {
             const isRelativeRule = !entryBasename
               ? undefined // not required (optimization)
               : rule.globParts.some(part => {
-                  const isDirectoryPart = !part.slice(-1)[0]
-                  return part.length <= (isDirectoryPart ? 2 : 1)
-                })
+                const isDirectoryPart = !part.slice(-1)[0]
+                return part.length <= (isDirectoryPart ? 2 : 1)
+              })
             // first, match against /foo/bar
             // then, against foo/bar
             // then, in the case of partials, match with a /
@@ -243,7 +243,7 @@ class Walker extends EE {
                 rule.negate && (
                   rule.match('/' + entry, true) ||
                   rule.match(entry, true)) ||
-                isRelativeRule && (
+                !!isRelativeRule && (
                   rule.match('/' + entryBasename + '/') ||
                   rule.match(entryBasename + '/') ||
                   rule.negate && (
