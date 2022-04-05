@@ -8,7 +8,7 @@
     "@npmcli/template-oss": "3.2.2",
     "mkdirp": "^0.5.1",
     "mutate-fs": "^2.1.1",
-    "rimraf": "^2.6.1",
+    "rimraf": "^3.0.2",
     "tap": "^16.0.1"
   },
   "scripts": {
