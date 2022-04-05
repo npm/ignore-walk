@@ -1,6 +1,6 @@
 'use strict'
 // ignore most things
-const walk = require('../')
+const walk = require('..')
 const { resolve } = require('path')
 const path = resolve(__dirname, 'fixtures')
 

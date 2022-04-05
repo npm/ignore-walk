@@ -1,6 +1,6 @@
 'use strict'
 const t = require('tap')
-const walk = require('../')
+const walk = require('..')
 const Walker = walk.Walker
 const WalkerSync = walk.WalkerSync
 const mutateFS = require('mutate-fs')

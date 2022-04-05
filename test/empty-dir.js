@@ -1,7 +1,7 @@
 'use strict'
 const mkdirp = require('mkdirp')
 const t = require('tap')
-const walk = require('../')
+const walk = require('..')
 const Walker = walk.Walker
 const WalkerSync = walk.WalkerSync
 const path = require('path')
