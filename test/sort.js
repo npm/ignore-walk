@@ -1,7 +1,7 @@
 'use strict'
 // ignore most things
-const walk = require('../')
-const {resolve} = require('path')
+const walk = require('..')
+const { resolve } = require('path')
 
 // set the ignores just for this test
 require('./common.js').ignores({

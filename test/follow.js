@@ -1,6 +1,6 @@
 'use strict'
 // ignore most things
-const walk = require('../')
+const walk = require('..')
 
 // set the ignores just for this test
 require('./common.js').ignores({
@@ -66,12 +66,12 @@ const isWindows = process.platform === 'win32'
 t.test('fail following symlink to nowhere', {
   skip: isWindows && 'no symlink support for missing dirs on windows',
 }, async t => {
-  const path = t.testdir({
+  const testdir = t.testdir({
     a: {
       b: {},
     },
     alink: t.fixture('symlink', './a/b/c'),
   })
-  t.throws(() => walk.sync({ path, follow: true }), { code: 'ENOENT' })
-  t.rejects(() => walk({ path, follow: true }), { code: 'ENOENT' })
+  t.throws(() => walk.sync({ path: testdir, follow: true }), { code: 'ENOENT' })
+  t.rejects(() => walk({ path: testdir, follow: true }), { code: 'ENOENT' })
 })

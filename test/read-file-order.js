@@ -1,5 +1,5 @@
 'use strict'
-const walk = require('../')
+const walk = require('..')
 const Walker = walk.Walker
 const WalkerSync = walk.WalkerSync
 const fs = require('fs')
@@ -30,7 +30,7 @@ fs.readFile = (filename, options, callback) => {
 
   parallelCount++
 
-  process.nextTick(_ => {
+  process.nextTick(() => {
     if (parallelCount > 1) {
       if (!firstCall) {
         return firstCall = cb => {
@@ -44,7 +44,7 @@ fs.readFile = (filename, options, callback) => {
       }
 
       if (filename.indexOf('.gitignore') !== -1) {
-        firstCall(_ => originalReadFile(filename, options, callback))
+        firstCall(() => originalReadFile(filename, options, callback))
       } else {
         originalReadFile(filename, options, (err, data) => {
           callback(err, data)
