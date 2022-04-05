@@ -64,7 +64,7 @@ class Walker extends EE {
     this.entries = entries
     if (entries.length === 0) {
       if (this.includeEmpty) {
-        this.result.add(this.path.substr(this.root.length + 1))
+        this.result.add(this.path.slice(this.root.length + 1))
       }
       this.emit('done', this.result)
     } else {
@@ -156,7 +156,7 @@ class Walker extends EE {
     const abs = this.path + '/' + entry
     if (!st.isDirectory()) {
       if (file) {
-        this.result.add(abs.substr(this.root.length + 1))
+        this.result.add(abs.slice(this.root.length + 1))
       }
       then()
     } else {
