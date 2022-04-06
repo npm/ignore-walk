@@ -1,5 +1,12 @@
 # Changelog
 
+### [5.0.1](https://github.com/npm/ignore-walk/compare/v5.0.0...v5.0.1) (2022-04-06)
+
+
+### Bug Fixes
+
+* trim ignore rules before matching ([#28](https://github.com/npm/ignore-walk/issues/28)) ([e6a9acc](https://github.com/npm/ignore-walk/commit/e6a9acceeeab3df0eb13d02f1c0f8dd69f8492c2))
+
 ## [5.0.0](https://github.com/npm/ignore-walk/compare/v4.0.1...v5.0.0) (2022-04-05)
 
 
