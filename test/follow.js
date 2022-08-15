@@ -14,7 +14,9 @@ const fs = require('fs')
 const link = path.resolve(__dirname, 'fixtures/link')
 try {
   fs.unlinkSync(link)
-} catch (_) {}
+} catch {
+  // ignore errors
+}
 fs.symlinkSync('d', link)
 
 t.teardown(_ => fs.unlinkSync(link))
