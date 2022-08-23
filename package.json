@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "devDependencies": {
     "@npmcli/eslint-config": "^3.0.1",
-    "@npmcli/template-oss": "3.5.0",
+    "@npmcli/template-oss": "3.6.0",
     "mkdirp": "^1.0.4",
     "mutate-fs": "^2.1.1",
     "rimraf": "^3.0.2",
