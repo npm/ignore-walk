@@ -1,5 +1,15 @@
 # Changelog
 
+## [6.0.0](https://github.com/npm/ignore-walk/compare/v5.0.1...v6.0.0) (2022-10-10)
+
+### ⚠️ BREAKING CHANGES
+
+* `ignore-walk` is now compatible with the following semver range for node: `^14.17.0 || ^16.13.0 || >=18.0.0`
+
+### Features
+
+* [`e723a53`](https://github.com/npm/ignore-walk/commit/e723a53bbd283f86fff819089db81fbe549662a5) [#43](https://github.com/npm/ignore-walk/pull/43) postinstall for dependabot template-oss PR (@lukekarrys)
+
 ### [5.0.1](https://github.com/npm/ignore-walk/compare/v5.0.0...v5.0.1) (2022-04-06)
 
 
