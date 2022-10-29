@@ -113,6 +113,9 @@ jobs:
           - name: macOS
             os: macos-latest
             shell: bash
+          - name: Windows
+            os: windows-latest
+            shell: cmd
         node-version:
           - 14.17.0
           - 14.x
@@ -200,6 +203,9 @@ jobs:
         run: npm -v
       - name: Install Dependencies
         run: npm i --ignore-scripts --no-audit --no-fund
+      - name: Set Tap Coverage
+        if: matrix.platform.os == 'windows-latest'
+        run: npm run test:windows-coverage --ignore-scripts
       - name: Add Problem Matcher
         run: echo "::add-matcher::.github/matchers/tap.json"
       - name: Test
