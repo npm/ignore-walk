@@ -43,7 +43,7 @@
     "lib/"
   ],
   "dependencies": {
-    "minimatch": "^5.0.1"
+    "minimatch": "^6.1.5"
   },
   "tap": {
     "test-env": "LC_ALL=sk",
