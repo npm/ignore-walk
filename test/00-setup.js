@@ -14,14 +14,12 @@
 // we make the sorting locale-specific, the tests will all fail, because
 // it'll go ['ccc','dhc','chd'] instead of ['ccc','chd','dhc'].
 
-var mkdirp = require('mkdirp')
-var path = require('path')
-var fs = require('fs')
-var rimraf = require('rimraf')
-var fixtures = path.resolve(__dirname, 'fixtures')
+const path = require('path')
+const fs = require('fs/promises')
+const fixtures = path.resolve(__dirname, 'fixtures')
 
-var chars = ['d', 'c', 'h']
-var dirs = []
+const chars = ['d', 'c', 'h']
+const dirs = []
 
 for (let i = 0; i < 3; i++) {
   for (let j = 0; j < 3; j++) {
@@ -31,7 +29,7 @@ for (let i = 0; i < 3; i++) {
   }
 }
 
-var files = []
+const files = []
 
 for (let i = 0; i < 3; i++) {
   for (let j = 0; j < 3; j++) {
@@ -42,13 +40,17 @@ for (let i = 0; i < 3; i++) {
   }
 }
 
-rimraf.sync(path.resolve(__dirname, 'fixtures'))
+const main = async () => {
+  fs.rm(path.resolve(__dirname, 'fixtures'), { recursive: true, force: true })
 
-dirs.forEach(function (dir) {
-  dir = path.resolve(fixtures, dir)
-  mkdirp.sync(dir)
-  files.forEach(function (file) {
-    file = path.resolve(dir, file)
-    fs.writeFileSync(file, path.basename(file))
-  })
-})
+  for (let dir of dirs) {
+    dir = path.resolve(fixtures, dir)
+    await fs.mkdir(dir, { recursive: true })
+    for (let file of files) {
+      file = path.resolve(dir, file)
+      await fs.writeFile(file, path.basename(file))
+    }
+  }
+}
+
+main()
