@@ -1,14 +1,15 @@
 'use strict'
-const mkdirp = require('mkdirp')
+
 const t = require('tap')
+const fs = require('fs/promises')
 const walk = require('..')
 const Walker = walk.Walker
 const WalkerSync = walk.WalkerSync
 const path = require('path')
 const dir = path.resolve(__dirname, 'fixtures/empty')
-const rimraf = require('rimraf')
-mkdirp.sync(dir)
-t.teardown(_ => rimraf.sync(dir))
+
+t.before(() => fs.mkdir(dir, { recursive: true }))
+t.teardown(_ => fs.rm(dir, { recursive: true, force: true }))
 process.chdir(path.resolve(__dirname, 'fixtures'))
 
 require('./common.js').ignores({
