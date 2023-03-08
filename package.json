@@ -6,19 +6,14 @@
   "devDependencies": {
     "@npmcli/eslint-config": "^4.0.0",
     "@npmcli/template-oss": "4.12.0",
-    "mkdirp": "^1.0.4",
     "mutate-fs": "^2.1.1",
-    "rimraf": "^3.0.2",
     "tap": "^16.0.1"
   },
   "scripts": {
     "test": "tap",
     "posttest": "npm run lint",
     "lint": "eslint \"**/*.js\"",
-    "eslint": "eslint",
     "lintfix": "npm run lint -- --fix",
-    "npmclilint": "npmcli-lint",
-    "postsnap": "npm run lintfix --",
     "postlint": "template-oss-check",
     "template-oss-apply": "template-oss-apply --force",
     "test:windows-coverage": "npm pkg set tap.statements=99 --json && npm pkg set tap.branches=98 --json && npm pkg set tap.lines=99 --json",
