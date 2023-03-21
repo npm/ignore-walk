@@ -1,5 +1,11 @@
 # Changelog
 
+## [6.0.2](https://github.com/npm/ignore-walk/compare/v6.0.1...v6.0.2) (2023-03-21)
+
+### Dependencies
+
+* [`7a459ad`](https://github.com/npm/ignore-walk/commit/7a459ad3596d488f7fcf48bbbd0fff4af2a6f940) [#78](https://github.com/npm/ignore-walk/pull/78) bump minimatch from 6.2.0 to 7.4.2 (#78)
+
 ## [6.0.1](https://github.com/npm/ignore-walk/compare/v6.0.0...v6.0.1) (2023-02-07)
 
 ### Dependencies
