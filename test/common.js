@@ -11,6 +11,7 @@ exports.ignores = ignores
 exports.writeIgnoreFile = writeIgnoreFile
 exports.writeIgnores = writeIgnores
 exports.clearIgnores = clearIgnores
+exports.createFile = createFile
 
 function writeIgnoreFile (file, rules) {
   file = path.resolve(__dirname, 'fixtures', file)
@@ -36,4 +37,14 @@ function clearIgnores (set) {
 function ignores (set) {
   writeIgnores(set)
   process.on('exit', clearIgnores.bind(null, set))
+}
+
+/** Used to create an extra file next to the fixtures from 00-setup.js. */
+function createFile (dir, file) {
+  var fixtures = path.resolve(__dirname, 'fixtures')
+
+  dir = path.resolve(fixtures, dir)
+  fs.mkdirSync(dir, { recursive: true })
+  file = path.resolve(dir, file)
+  fs.writeFileSync(file, path.basename(file))
 }
