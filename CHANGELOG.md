@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.0.4](https://github.com/npm/ignore-walk/compare/v6.0.3...v6.0.4) (2023-11-29)
+
+### Bug Fixes
+
+* [`b587cc3`](https://github.com/npm/ignore-walk/commit/b587cc32f430dc8d3052cb2905416e301f26df0d) handling of nested unignores (#119) (@mohd-akram)
+* [`493401a`](https://github.com/npm/ignore-walk/commit/493401a71e71ab3f1137a27c65e1a4412d93ae26) recursive directory ignore rules (#118) (@wraithgar, @LinqLover)
+* [`0bb0972`](https://github.com/npm/ignore-walk/commit/0bb0972643eb52cfd828d769ef7602323e427df5) [#116](https://github.com/npm/ignore-walk/pull/116) disallow child unignoring parent directory ignore (#116) (@mohd-akram)
+
 ## [6.0.3](https://github.com/npm/ignore-walk/compare/v6.0.2...v6.0.3) (2023-04-26)
 
 ### Dependencies
