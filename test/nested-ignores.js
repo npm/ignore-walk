@@ -26,9 +26,6 @@ var expected = [
   'c/d/c/ccc',
   'c/d/d/ccc',
   'd/c/h/.dch',
-  'h/c/d/.hcd',
-  'h/c/d/dch',
-  'h/c/d/ddd',
   'h/c/d/hcd',
 ]
 
