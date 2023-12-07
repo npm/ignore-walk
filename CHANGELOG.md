@@ -1,5 +1,16 @@
 # Changelog
 
+## [6.0.5](https://github.com/npm/ignore-walk/compare/v6.0.4...v6.0.5) (2023-12-07)
+
+### Chores
+
+* [`d2213d5`](https://github.com/npm/ignore-walk/commit/d2213d50c15ddeae51c9abcb929a64b546c2ee30) [#122](https://github.com/npm/ignore-walk/pull/122) postinstall for dependabot template-oss PR (@lukekarrys)
+* [`36cac8e`](https://github.com/npm/ignore-walk/commit/36cac8e65033394f100dafdc7dee0213cc19630b) [#122](https://github.com/npm/ignore-walk/pull/122) bump @npmcli/template-oss from 4.21.1 to 4.21.3 (@dependabot[bot])
+* [`477a720`](https://github.com/npm/ignore-walk/commit/477a7202b10d43aa4afdd308c18501a24718614a) [#121](https://github.com/npm/ignore-walk/pull/121) chore: chore: postinstall for dependabot template-oss PR (@lukekarrys)
+* [`67851d4`](https://github.com/npm/ignore-walk/commit/67851d469f8290771494b7c05dcb953ea6e99656) [#121](https://github.com/npm/ignore-walk/pull/121) bump @npmcli/template-oss from 4.21.0 to 4.21.1 (@dependabot[bot])
+* [`f5919cc`](https://github.com/npm/ignore-walk/commit/f5919cc2e3d377b7b36f59569e201fa967ac7d3c) [#114](https://github.com/npm/ignore-walk/pull/114) template-oss-apply (@dependabot[bot])
+* [`f5919cc`](https://github.com/npm/ignore-walk/commit/f5919cc2e3d377b7b36f59569e201fa967ac7d3c) [#114](https://github.com/npm/ignore-walk/pull/114) bump @npmcli/template-oss from 4.19.0 to 4.21.0 (@dependabot[bot])
+
 ## [6.0.4](https://github.com/npm/ignore-walk/compare/v6.0.3...v6.0.4) (2023-11-29)
 
 ### Bug Fixes
