@@ -9,7 +9,7 @@ const path = require('path')
 const dir = path.resolve(__dirname, 'fixtures/empty')
 
 t.before(() => fs.mkdir(dir, { recursive: true }))
-t.teardown(_ => fs.rm(dir, { recursive: true, force: true }))
+t.teardown(() => fs.rm(dir, { recursive: true, force: true }))
 process.chdir(path.resolve(__dirname, 'fixtures'))
 
 require('./common.js').ignores({
