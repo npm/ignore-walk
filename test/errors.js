@@ -29,7 +29,7 @@ t.test('error only emits once', t => {
   })
 
   t.test('sync', t => {
-    t.throws(_ => new WalkerSync({ path: __dirname }).start(), poop)
+    t.throws(() => new WalkerSync({ path: __dirname }).start(), poop)
     t.end()
   })
 
@@ -49,7 +49,7 @@ t.test('readdir error', t => {
   })
 
   t.test('sync', t => {
-    t.throws(_ => new WalkerSync().start(), poop)
+    t.throws(() => new WalkerSync().start(), poop)
     t.end()
   })
 
@@ -68,7 +68,7 @@ t.test('readFile error', t => {
   })
 
   t.test('sync', t => {
-    t.throws(_ => new WalkerSync().start(), poop)
+    t.throws(() => new WalkerSync().start(), poop)
     t.end()
   })
 

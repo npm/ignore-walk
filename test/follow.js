@@ -19,7 +19,7 @@ try {
 }
 fs.symlinkSync('d', link)
 
-t.teardown(_ => fs.unlinkSync(link))
+t.teardown(() => fs.unlinkSync(link))
 
 t.test('follow symlink', t => {
   const expected = [
