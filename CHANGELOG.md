@@ -1,5 +1,16 @@
 # Changelog
 
+## [7.0.0](https://github.com/npm/ignore-walk/compare/v6.0.5...v7.0.0) (2024-09-03)
+### ⚠️ BREAKING CHANGES
+* `ignore-walk` now supports node `^18.17.0 || >=20.5.0`
+### Bug Fixes
+* [`0379dab`](https://github.com/npm/ignore-walk/commit/0379dabeddd067b3afdcf185b321483d9c766b28) [#142](https://github.com/npm/ignore-walk/pull/142) align to npm 10 node engine range (@hashtagchris)
+### Chores
+* [`7575014`](https://github.com/npm/ignore-walk/commit/75750146afa38e2b4da92725611ee2f9baf9b5e8) [#142](https://github.com/npm/ignore-walk/pull/142) run template-oss-apply (@hashtagchris)
+* [`dce54bb`](https://github.com/npm/ignore-walk/commit/dce54bb6d486f99b5fd874cb3f9235f88a918d9a) [#140](https://github.com/npm/ignore-walk/pull/140) bump @npmcli/eslint-config from 4.0.5 to 5.0.0 (@dependabot[bot])
+* [`38ac197`](https://github.com/npm/ignore-walk/commit/38ac197e7edc3bd235bd30d4e33eecd24ed73bc0) [#141](https://github.com/npm/ignore-walk/pull/141) postinstall for dependabot template-oss PR (@hashtagchris)
+* [`40cc562`](https://github.com/npm/ignore-walk/commit/40cc562a5181d7ef21d4032d09f3708df0cfb01b) [#141](https://github.com/npm/ignore-walk/pull/141) bump @npmcli/template-oss from 4.23.1 to 4.23.3 (@dependabot[bot])
+
 ## [6.0.5](https://github.com/npm/ignore-walk/compare/v6.0.4...v6.0.5) (2024-05-04)
 
 ### Bug Fixes
