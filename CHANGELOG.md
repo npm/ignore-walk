@@ -1,5 +1,15 @@
 # Changelog
 
+## [8.0.0](https://github.com/npm/ignore-walk/compare/v7.0.0...v8.0.0) (2025-07-24)
+### ⚠️ BREAKING CHANGES
+* `ignore-walk` now supports node `^20.17.0 || >=22.9.0`
+### Bug Fixes
+* [`e46db89`](https://github.com/npm/ignore-walk/commit/e46db891a9a62ca0072f24bd766fb5826668e6e6) [#148](https://github.com/npm/ignore-walk/pull/148) update node engine requirement to ^20.17.0 || >=22.9.0 (@owlstronaut)
+### Dependencies
+* [`27ae0c0`](https://github.com/npm/ignore-walk/commit/27ae0c0c4fd9c03317527caaafbab5b8d2aacc08) [#148](https://github.com/npm/ignore-walk/pull/148) `minimatch@10.0.3`
+### Chores
+* [`fd25360`](https://github.com/npm/ignore-walk/commit/fd253609d86312ecbcafcd16353f5d2bb6e4e7f8) [#145](https://github.com/npm/ignore-walk/pull/145) bump @npmcli/template-oss from 4.23.3 to 4.24.3 (#145) (@owlstronaut)
+
 ## [7.0.0](https://github.com/npm/ignore-walk/compare/v6.0.5...v7.0.0) (2024-09-03)
 ### ⚠️ BREAKING CHANGES
 * `ignore-walk` now supports node `^18.17.0 || >=20.5.0`
