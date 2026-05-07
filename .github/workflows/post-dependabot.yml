@@ -17,7 +17,7 @@ jobs:
         shell: bash
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.ref }}
       - name: Setup Git User
@@ -25,11 +25,11 @@ jobs:
           git config --global user.email "npm-cli+bot@github.com"
           git config --global user.name "npm CLI robot"
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         id: node
         with:
-          node-version: 22.x
-          check-latest: contains('22.x', '.x')
+          node-version: 26.x
+          check-latest: contains('26.x', '.x')
       - name: Install Latest npm
         uses: ./.github/actions/install-latest-npm
         with:
@@ -54,7 +54,7 @@ jobs:
           else
             # strip leading slash from directory so it works as a
             # a path to the workspace flag
-            echo "workspace=-w ${dependabot_dir#/}" >> $GITHUB_OUTPUT
+            echo "workspace=--workspace ${dependabot_dir#/}" >> $GITHUB_OUTPUT
           fi
 
       - name: Apply Changes
