@@ -1,5 +1,15 @@
 # Changelog
 
+## [9.0.0](https://github.com/npm/ignore-walk/compare/v8.0.0...v9.0.0) (2026-05-08)
+### ⚠️ BREAKING CHANGES
+* `ignore-walk` now supports node `^22.22.2 || ^24.15.0 || >=26.0.0`
+* template-oss-apply
+### Features
+* [`3c21c23`](https://github.com/npm/ignore-walk/commit/3c21c235305f76d7f458f4a3411a199fd04db1f3) [#155](https://github.com/npm/ignore-walk/pull/155) bump to new node engine range (@owlstronaut)
+* [`2169c72`](https://github.com/npm/ignore-walk/commit/2169c720e7f1722720bdaddd75718fabf6e116eb) [#155](https://github.com/npm/ignore-walk/pull/155) template-oss-apply (@owlstronaut)
+### Chores
+* [`c341367`](https://github.com/npm/ignore-walk/commit/c341367bca9e08c8613bcaaa8ad92500381c5630) [#155](https://github.com/npm/ignore-walk/pull/155) template-oss-apply (@owlstronaut)
+
 ## [8.0.0](https://github.com/npm/ignore-walk/compare/v7.0.0...v8.0.0) (2025-07-24)
 ### ⚠️ BREAKING CHANGES
 * `ignore-walk` now supports node `^20.17.0 || >=22.9.0`
