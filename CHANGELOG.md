@@ -1,5 +1,14 @@
 # Changelog
 
+## [9.0.1](https://github.com/npm/ignore-walk/compare/v9.0.0...v9.0.1) (2026-11-17)
+### Dependencies
+* [`c12b43d`](https://github.com/npm/ignore-walk/commit/c12b43db00d2f3547b4204ea6b6ed603b51595fc) [#161](https://github.com/npm/ignore-walk/pull/161) update minimatch to ^11.0.2 (#161) (@jeffkl, @Copilot)
+### Chores
+* [`3a89d94`](https://github.com/npm/ignore-walk/commit/3a89d9469a69493e60c0a1e4e0821f6b0734f8b8) [#158](https://github.com/npm/ignore-walk/pull/158) bump @npmcli/eslint-config from 6.0.1 to 7.0.0 (@dependabot[bot])
+* [`b943963`](https://github.com/npm/ignore-walk/commit/b943963d3cb7f35d79aca6cd665971b17285c706) [#152](https://github.com/npm/ignore-walk/pull/152) bump @npmcli/eslint-config from 5.1.0 to 6.0.1 (#152) (@dependabot[bot])
+* [`1112364`](https://github.com/npm/ignore-walk/commit/111236466248abf4a96f65740f59a7dad89a5e23) [#159](https://github.com/npm/ignore-walk/pull/159) bump @npmcli/template-oss from 5.1.0 to 5.1.1 (#159) (@dependabot[bot], @npm-cli-bot)
+* [`0cf0cf8`](https://github.com/npm/ignore-walk/commit/0cf0cf8e39f4051839b0be22a1fdf332aef448c1) [#157](https://github.com/npm/ignore-walk/pull/157) postinstall for dependabot template-oss PR (@npm-cli-bot)
+
 ## [9.0.0](https://github.com/npm/ignore-walk/compare/v8.0.0...v9.0.0) (2026-05-08)
 ### ⚠️ BREAKING CHANGES
 * `ignore-walk` now supports node `^22.22.2 || ^24.15.0 || >=26.0.0`
